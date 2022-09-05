@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
+
 public class TollFeeCalculator {
 
     public TollFeeCalculator(String inputFile) {
