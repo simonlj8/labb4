@@ -45,12 +45,12 @@ public class TollFeeCalculator {
         int hour = date.getHour();
         int minute = date.getMinute();
         if (hour == 6 && minute <= 29) return 8; // bug?
-        else if (hour == 6 && minute <= 59) return 13;
+        else if (hour == 6) return 13;
         else if (hour == 7 && minute <= 59) return 18;
         else if (hour == 8 && minute <= 29) return 13;
         else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
         else if (hour == 15 && minute <= 29) return 13;
-        else if (hour == 15 || hour == 16 && minute <= 59) return 18;
+        else if (hour == 15 || hour == 16) return 18;
         else if (hour == 17 && minute <= 59) return 13;
         else if (hour == 18 && minute <= 29) return 8;  // bug?
         else return 0;
