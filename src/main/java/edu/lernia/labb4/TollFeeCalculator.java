@@ -37,22 +37,22 @@ public class TollFeeCalculator {
                 totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
             }
         }
-        return Math.max(totalFee, 60);
+        return Math.max(totalFee, 60);  // bug? always show 60.
     }
 
     public static int getTollFeePerPassing(LocalDateTime date) {
         if (isTollFreeDate(date)) return 0;
         int hour = date.getHour();
         int minute = date.getMinute();
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
+        if (hour == 6 && minute <= 29) return 8; // bug?
+        else if (hour == 6 && minute <= 59) return 13;
+        else if (hour == 7 && minute <= 59) return 18;
+        else if (hour == 8 && minute <= 29) return 13;
         else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
+        else if (hour == 15 && minute <= 29) return 13;
+        else if (hour == 15 || hour == 16 && minute <= 59) return 18;
+        else if (hour == 17 && minute <= 59) return 13;
+        else if (hour == 18 && minute <= 29) return 8;  // bug?
         else return 0;
     }
 
