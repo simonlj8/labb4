@@ -33,11 +33,9 @@ public class TollFeeCalculator {
             if(diffInMinutes > 60 || diffInMinutes == 0) {  //Try some small change, Bug?
                 totalFee += getTollFeePerPassing(date);
                 intervalStart = date;  // Bug?
-            } else {
-            	
-            	
+            } else {          	
             	              	 
-              totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
+              totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart)); // BUG? Not fixed
             }
         }
         return Math.min(totalFee, 60);  // bug? always show 60. Try change to Math.min?
