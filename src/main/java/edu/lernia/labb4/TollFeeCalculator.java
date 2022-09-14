@@ -34,11 +34,11 @@ public class TollFeeCalculator {
                 totalFee += getTollFeePerPassing(date);
                 intervalStart = date;
             } else {
-            	 if(totalFee < Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart))){
+            	 if( totalFee < Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart))) 
+            	 {            		 
                      totalFee = Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
                  }
-            	
-            	
+            	            	
               //  totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
             }
         }
@@ -69,7 +69,6 @@ public class TollFeeCalculator {
     public static boolean isTollFreeDate(LocalDateTime date) {
         int day = date.getDayOfWeek().getValue();
         int month = date.getMonthValue();
-
         return day == 6 || day == 7 || month  == 7;
     }
 
