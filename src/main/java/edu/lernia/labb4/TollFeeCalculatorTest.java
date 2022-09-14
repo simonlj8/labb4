@@ -41,7 +41,7 @@ public class TollFeeCalculatorTest {
 		date[1] = LocalDateTime.of(2020, Month.JUNE, 30, 15, 35);
 		
 		//int total = TollFeeCalculator.getTotalFeeCost(dateTimes);
-		System.out.println(date[1]);
+		//System.out.println(date[1]);
 		
 		assertEquals(36, TollFeeCalculator.getTotalFeeCost(date));
 	}

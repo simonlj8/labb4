@@ -28,18 +28,16 @@ public class TollFeeCalculator {
         int totalFee = 0;
         LocalDateTime intervalStart = dates[0];
         for(LocalDateTime date: dates) {
-            System.out.println(date.toString());
+            System.out.println(date.toString() + " " + getTollFeePerPassing(date));
             long diffInMinutes = intervalStart.until(date, ChronoUnit.MINUTES);
             if(diffInMinutes > 60 || diffInMinutes == 0) {  //Try some small change, Bug?
                 totalFee += getTollFeePerPassing(date);
-                intervalStart = date;
+                intervalStart = date;  // Bug?
             } else {
-            	 if( totalFee < Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart))) 
-            	 {            		 
-                     totalFee = Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
-                 }
-            	            	
-              //  totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
+            	
+            	
+            	              	 
+              totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
             }
         }
         return Math.min(totalFee, 60);  // bug? always show 60. Try change to Math.min?
@@ -53,24 +51,21 @@ public class TollFeeCalculator {
         if (hour == 6 && minute >= 0 && minute <= 29) return 8; 
         else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
         else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 8 && minute >= 30 || hour >= 9 && hour <= 14 && minute <= 59) return 8; //bug
+        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;        
+        else if (hour <= 8 && minute >= 30 || hour >= 9 && hour <= 14) return 8;
         else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18; //bug, not fixed
+        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18; 
         else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
         else if (hour == 18 && minute >= 0 && minute <= 29) return 8; 
         else return 0;
     }
     
-   /* public static boolean isTollFreeDate(LocalDateTime date) {
-        return date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7 || date.getMonth().getValue() == 7;
-    }*/
-    
     public static boolean isTollFreeDate(LocalDateTime date) {
-        int day = date.getDayOfWeek().getValue();
-        int month = date.getMonthValue();
-        return day == 6 || day == 7 || month  == 7;
+    
+        return date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7 || date.getMonth().getValue() == 7;
     }
+    
+   
 
     public static void main(String[] args) {
         new TollFeeCalculator("src/test/resources/Lab4.txt");
