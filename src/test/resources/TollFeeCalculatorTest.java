@@ -4,15 +4,14 @@
 package edu.lernia.labb4;
 
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author simon
@@ -23,7 +22,7 @@ import org.junit.jupiter.api.Test;
 public class TollFeeCalculatorTest {
 
 	/**
-	 * Test method for {@link edu.lernia.labb4.TollFeeCalculator#TollFeeCalculator(java.lang.String)}.
+	 * Test method for {@link TollFeeCalculator#TollFeeCalculator(String)}.
 	 */
 	@Test
 	void testTollFeeCalculator() {
@@ -31,7 +30,7 @@ public class TollFeeCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link edu.lernia.labb4.TollFeeCalculator#getTotalFeeCost(java.time.LocalDateTime[])}.
+	 * Test method for {@link TollFeeCalculator#getTotalFeeCost(LocalDateTime[])}.
 	 */
 	@DisplayName("Testing total amount from 2 different times")
 	@Test
@@ -47,7 +46,7 @@ public class TollFeeCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link edu.lernia.labb4.TollFeeCalculator#getTollFeePerPassing(java.time.LocalDateTime)}.
+	 * Test method for {@link TollFeeCalculator#getTollFeePerPassing(LocalDateTime)}.
 	 */
 	@DisplayName("Testing 2 different date and see if the amount is right")
 	@Test
@@ -65,7 +64,7 @@ public class TollFeeCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link edu.lernia.labb4.TollFeeCalculator#isTollFreeDate(java.time.LocalDateTime)}.
+	 * Test method for {@link TollFeeCalculator#isTollFreeDate(LocalDateTime)}.
 	 */
 	@DisplayName("Test to see if i get my free pass")
 	@Test
@@ -80,7 +79,7 @@ public class TollFeeCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link edu.lernia.labb4.TollFeeCalculator#main(java.lang.String[])}.
+	 * Test method for {@link TollFeeCalculator#main(String[])}.
 	 */
 	@Test
 	void testMain() {

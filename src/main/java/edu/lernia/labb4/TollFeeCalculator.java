@@ -14,7 +14,7 @@ public class TollFeeCalculator {
         try {
             Scanner sc = new Scanner(new File(inputFile));
             String[] dateStrings = sc.nextLine().split(", ");
-            LocalDateTime[] dates = new LocalDateTime[dateStrings.length-1];
+            LocalDateTime[] dates = new LocalDateTime[dateStrings.length]; // bug? Trying to remove -1
             for(int i = 0; i < dates.length; i++) {
                 dates[i] = LocalDateTime.parse(dateStrings[i], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             }
@@ -30,34 +30,47 @@ public class TollFeeCalculator {
         for(LocalDateTime date: dates) {
             System.out.println(date.toString());
             long diffInMinutes = intervalStart.until(date, ChronoUnit.MINUTES);
-            if(diffInMinutes > 60) {
+            if(diffInMinutes > 60 || diffInMinutes == 0) {  //Try some small change, Bug?
                 totalFee += getTollFeePerPassing(date);
                 intervalStart = date;
             } else {
-                totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
+            	 if(totalFee < Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart))){
+                     totalFee = Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
+                 }
+            	
+            	
+              //  totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart));
             }
         }
-        return Math.max(totalFee, 60);  // bug? always show 60.
+        return Math.min(totalFee, 60);  // bug? always show 60. Try change to Math.min?
     }
 
     public static int getTollFeePerPassing(LocalDateTime date) {
         if (isTollFreeDate(date)) return 0;
         int hour = date.getHour();
         int minute = date.getMinute();
-        if (hour == 6 && minute <= 29) return 8; // bug?
-        else if (hour == 6) return 13;
-        else if (hour == 7 && minute <= 59) return 18;
-        else if (hour == 8 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute <= 29) return 13;
-        else if (hour == 15 || hour == 16) return 18;
-        else if (hour == 17 && minute <= 59) return 13;
-        else if (hour == 18 && minute <= 29) return 8;  // bug?
+        
+        if (hour == 6 && minute >= 0 && minute <= 29) return 8; 
+        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
+        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
+        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
+        else if (hour == 8 && minute >= 30 || hour >= 9 && hour <= 14 && minute <= 59) return 8; //bug
+        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
+        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18; //bug, not fixed
+        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
+        else if (hour == 18 && minute >= 0 && minute <= 29) return 8; 
         else return 0;
     }
-
-    public static boolean isTollFreeDate(LocalDateTime date) {
+    
+   /* public static boolean isTollFreeDate(LocalDateTime date) {
         return date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7 || date.getMonth().getValue() == 7;
+    }*/
+    
+    public static boolean isTollFreeDate(LocalDateTime date) {
+        int day = date.getDayOfWeek().getValue();
+        int month = date.getMonthValue();
+
+        return day == 6 || day == 7 || month  == 7;
     }
 
     public static void main(String[] args) {
