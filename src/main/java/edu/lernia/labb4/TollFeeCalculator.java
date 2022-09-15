@@ -32,7 +32,7 @@ public class TollFeeCalculator {
             long diffInMinutes = intervalStart.until(date, ChronoUnit.MINUTES);
             if(diffInMinutes > 60 || diffInMinutes == 0) {  //Try some small change, Bug?
                 totalFee += getTollFeePerPassing(date);
-                intervalStart = date;  // Bug?
+                intervalStart = date;
             } else {          	
             	              	 
               totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart)); // BUG? Not fixed
@@ -49,7 +49,8 @@ public class TollFeeCalculator {
         if (hour == 6 && minute >= 0 && minute <= 29) return 8; 
         else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
         else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;        
+        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
+       // else if (hour >= 8 && minute >= 30 || hour >= 9 && minute >= 00 && hour <= 14  && minute <= 59) return 8;
         else if (hour <= 8 && minute >= 30 || hour >= 9 && hour <= 14) return 8;
         else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
         else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18; 
