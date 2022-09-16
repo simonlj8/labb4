@@ -1,6 +1,7 @@
 package edu.lernia.labb4;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,14 +10,14 @@ import java.util.Scanner;
 
 
 public class TollFeeCalculator {
-
+		
     public TollFeeCalculator(String inputFile) {
         try {
             Scanner sc = new Scanner(new File(inputFile));
             String[] dateStrings = sc.nextLine().split(", ");
             LocalDateTime[] dates = new LocalDateTime[dateStrings.length]; // bug? Trying to remove -1
             for(int i = 0; i < dates.length; i++) {
-                dates[i] = LocalDateTime.parse(dateStrings[i], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                dates[i] = LocalDateTime.parse(dateStrings[i], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));               
             }
             System.out.println("The total fee for the inputfile is " + getTotalFeeCost(dates));
         } catch(IOException e) {
@@ -33,14 +34,18 @@ public class TollFeeCalculator {
             if(diffInMinutes > 60 || diffInMinutes == 0) {  //Try some small change, Bug?
                 totalFee += getTollFeePerPassing(date);
                 intervalStart = date;
-            } else {          	
-            	              	 
-              totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart)); // BUG? Not fixed
+            } 
+            
+            else {
+            	if (getTollFeePerPassing(date) >= getTollFeePerPassing(intervalStart)) 
+            	 totalFee -= getTollFeePerPassing(intervalStart);
+            	 totalFee += getTollFeePerPassing(date);	
+             // totalFee += Math.max(getTollFeePerPassing(date), getTollFeePerPassing(intervalStart)); // BUG? Not fixed
             }
         }
         return Math.min(totalFee, 60);  // bug? always show 60. Try change to Math.min?
     }
-
+        
     public static int getTollFeePerPassing(LocalDateTime date) {
         if (isTollFreeDate(date)) return 0;
         int hour = date.getHour();
@@ -67,6 +72,9 @@ public class TollFeeCalculator {
    
 
     public static void main(String[] args) {
-        new TollFeeCalculator("src/test/resources/Lab4.txt");
+        new TollFeeCalculator("src/test/resources/Lab4.txt");     
+        
     }
+    
+    
 }

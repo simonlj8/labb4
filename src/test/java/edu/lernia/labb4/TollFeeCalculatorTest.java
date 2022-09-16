@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * @author simon
+ * @author Simon
  *
  */
 
@@ -38,10 +38,7 @@ public class TollFeeCalculatorTest {
 		LocalDateTime[] date = new LocalDateTime[2];
 		date[0] = LocalDateTime.of(2020, Month.JUNE, 30, 07, 30);
 		date[1] = LocalDateTime.of(2020, Month.JUNE, 30, 15, 35);
-		
-		//int total = TollFeeCalculator.getTotalFeeCost(dateTimes);
-		System.out.println(date[1]);
-		
+				
 		assertEquals(36, TollFeeCalculator.getTotalFeeCost(date));
 	}
 
